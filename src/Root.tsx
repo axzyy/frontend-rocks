@@ -9,7 +9,7 @@ export function Root(){
     </div>
   );
 };
-  
+  //ciao 
 const Card = ({ pokemonName }: { pokemonName: string }) => {
   return (
     <div className="bg-green-500">
