@@ -29,21 +29,19 @@ export function Root() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   useEffect(() => {
-    PokeAPI.listPokemons(20).then((response) => {
-      const mapped = response.results.map(
-        (p: { name: string }, idx: number) => {
-          const id = idx + 1;
-
-          return {
-            id,
-            name: p.name,
-            image: `https://img.pokemondb.net/artwork/large/${p.name}.jpg`,
-          };
-        }
-      );
-
-      setPokemons(mapped);
-    });
+    const fetchPokemons = async () => {
+      const pokemons: Pokemon[] = [];
+      for (let i = 1; i <= 20; i++) {
+        const pokemon = await PokeAPI.getPokemonById(i);
+        pokemons.push({
+          id: pokemon.id,
+          name: pokemon.name,
+          image: `https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`,
+        });
+      }
+      setPokemons(pokemons);
+    };
+    fetchPokemons();
   }, []);
 
   return (
